@@ -71,21 +71,21 @@ const COLORS = [
     id: "pink",
     name: "Vibrant Cyber Pink",
     code: "#FF0F6A",
-    image: "/media/packshot_pink.jpg",
+    image: "/media/packshot_pink.png",
     status: "В наличност - Бърза доставка",
   },
   {
     id: "black",
     name: "Volt Ice Blue",
     code: "linear-gradient(135deg, #ffffff 50%, #00d8ff 50%)",
-    image: "/media/packshot_white_blue.jpg",
+    image: "/media/packshot_white_blue.png",
     status: "В наличност - Ограничено количество",
   },
   {
     id: "cyan",
     name: "Acid Neon Green",
     code: "linear-gradient(135deg, #ffffff 50%, #10b981 50%)",
-    image: "/media/packshot_white_green.jpg",
+    image: "/media/packshot_white_green.png",
     status: "В наличност",
   },
 ];
@@ -269,7 +269,7 @@ function Index() {
 
       {/* Trust Badges */}
       <section className="bg-[#121214] border-y border-white/10 py-8 px-4">
-        <div className="max-w-7xl mx-auto flex flex-wrap justify-center md:justify-around items-center gap-6 text-center">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:flex md:flex-wrap md:justify-around items-center gap-6 text-left max-md:max-w-md max-md:mx-auto max-md:gap-y-6">
           <div className="flex items-center gap-3">
             <Truck className="w-6 h-6 text-[#FF0F6A]" />
             <div className="text-left">
@@ -335,36 +335,21 @@ function Index() {
 
             {/* Thumbnail Previews / Angles */}
             <div className="grid grid-cols-3 gap-4">
-              <div
-                className="aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-[#121214] p-3 flex items-center justify-center cursor-pointer hover:border-white/30 transition-colors"
-                onClick={() => setSelectedColor(COLORS[0])}
-              >
-                <img
-                  src="/media/packshot.webp"
-                  alt="Cyber Pink Packshot"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <div
-                className="aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-[#121214] p-3 flex items-center justify-center cursor-pointer hover:border-white/30 transition-colors"
-                onClick={() => setSelectedColor(COLORS[1])}
-              >
-                <img
-                  src="/media/packshot_black.webp"
-                  alt="Midnight Black Packshot"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <div
-                className="aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-[#121214] p-3 flex items-center justify-center cursor-pointer hover:border-white/30 transition-colors"
-                onClick={() => setSelectedColor(COLORS[2])}
-              >
-                <img
-                  src="/media/packshot_cyan.webp"
-                  alt="Volt Cyan Packshot"
-                  className="w-full h-full object-contain"
-                />
-              </div>
+              {COLORS.map((color) => (
+                <div
+                  key={color.id}
+                  className={`aspect-[4/3] rounded-xl overflow-hidden border bg-[#121214] p-3 flex items-center justify-center cursor-pointer hover:border-white/30 transition-colors ${
+                    selectedColor.id === color.id ? "border-[#FF0F6A]" : "border-white/10"
+                  }`}
+                  onClick={() => setSelectedColor(color)}
+                >
+                  <img
+                    src={color.image}
+                    alt={color.name}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+              ))}
             </div>
           </div>
 
@@ -510,14 +495,14 @@ function Index() {
           <div className="lg:col-span-5 order-2 lg:order-1">
             <div className="w-full aspect-square rounded-2xl overflow-hidden border border-white/10 relative group">
               <img
-                src="/media/macro.webp"
-                alt="Close-up macro of Kinetic Glasses"
+                src="/media/macro.jpg"
+                alt="Kinetic Glasses Style Showcase"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute bottom-4 left-4 bg-black/80 backdrop-blur-md border border-white/10 px-4 py-2 rounded-xl flex items-center gap-2">
                 <Maximize2 className="w-3.5 h-3.5 text-[#00D8FF]" />
                 <span className="text-xs font-mono font-bold tracking-wider text-white/90">
-                  MACRO MATERIAL VIEW
+                  STYLE SHOWCASE
                 </span>
               </div>
             </div>
