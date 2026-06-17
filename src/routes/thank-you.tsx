@@ -26,7 +26,7 @@ function ThankYou() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0d0d0e] text-white font-sans antialiased selection:bg-[#FF0F6A] selection:text-white flex flex-col justify-between">
+    <div className="min-h-screen w-full overflow-x-hidden bg-[#0d0d0e] text-white font-sans antialiased selection:bg-[#FF0F6A] selection:text-white flex flex-col justify-between">
       {/* Header */}
       <header className="bg-[#0d0d0e]/95 border-b border-white/10 px-4 py-4 md:px-8 flex justify-between items-center">
         <div className="flex items-center gap-2">
@@ -54,7 +54,7 @@ function ThankYou() {
         {/* Background glow effects */}
         <div className="absolute w-[60%] h-[60%] bg-gradient-to-tr from-[#FF0F6A]/15 to-[#00D8FF]/15 rounded-full blur-3xl -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
 
-        <div className="max-w-xl w-full bg-[#121214] border border-white/10 rounded-3xl p-8 md:p-12 text-center flex flex-col items-center gap-6 shadow-2xl">
+        <div className="max-w-xl w-full bg-[#121214] border border-white/10 rounded-3xl p-6 sm:p-12 text-center flex flex-col items-center gap-6 shadow-2xl">
           {/* Animated Success Badge */}
           <div className="relative flex items-center justify-center">
             <div className="absolute w-20 h-20 bg-[#00D8FF]/20 rounded-full animate-ping" />
@@ -75,13 +75,13 @@ function ThankYou() {
               <div className="text-[10px] font-black tracking-widest uppercase text-white/40 border-b border-white/5 pb-2">
                 Детайли за поръчката
               </div>
-              <div className="text-xs font-semibold flex justify-between">
+              <div className="text-xs font-semibold flex flex-col sm:flex-row sm:justify-between gap-1">
                 <span className="text-white/60">Клиент:</span>
-                <span className="text-white font-bold">{orderDetails.name}</span>
+                <span className="text-white font-bold sm:text-right">{orderDetails.name}</span>
               </div>
-              <div className="text-xs font-semibold flex justify-between">
+              <div className="text-xs font-semibold flex flex-col sm:flex-row sm:justify-between gap-1">
                 <span className="text-white/60">Продукт:</span>
-                <span className="text-white font-bold">
+                <span className="text-white font-bold sm:text-right">
                   KINETIC S-Series ({orderDetails.color})
                 </span>
               </div>
@@ -123,7 +123,7 @@ function ThankYou() {
 
       {/* Footer Info section */}
       <section className="bg-[#121214] border-t border-white/10 py-6 px-4">
-        <div className="max-w-4xl mx-auto flex flex-wrap justify-center md:justify-around items-center gap-4 text-center">
+        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row justify-center sm:justify-around items-center gap-4 text-center">
           <div className="flex items-center gap-2">
             <Zap className="w-4 h-4 text-[#FF0F6A]" />
             <span className="text-xs font-bold uppercase tracking-wider">Експресна Доставка</span>
