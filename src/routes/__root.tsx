@@ -13,6 +13,16 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportHiggsfieldError } from "../lib/higgsfield-error-reporting";
 
+declare global {
+  interface Window {
+    fbq?: (
+      event: string,
+      action?: string,
+      params?: { value?: number; currency?: string } & Record<string, unknown>,
+    ) => void;
+  }
+}
+
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -142,8 +152,8 @@ function RootComponent() {
   const location = useLocation();
 
   useEffect(() => {
-    if (typeof window !== "undefined" && typeof (window as any).fbq === "function") {
-      (window as any).fbq("track", "PageView");
+    if (typeof window !== "undefined" && typeof window.fbq === "function") {
+      window.fbq("track", "PageView");
     }
   }, [location.pathname]);
 

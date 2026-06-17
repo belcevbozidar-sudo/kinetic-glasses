@@ -24,12 +24,12 @@ function ThankYou() {
       }
 
       // Track Sales (Purchase) and Lead on Meta Pixel
-      if (typeof (window as any).fbq === "function") {
-        (window as any).fbq("track", "Purchase", {
-          value: 17.90,
+      if (typeof window !== "undefined" && typeof window.fbq === "function") {
+        window.fbq("track", "Purchase", {
+          value: 17.9,
           currency: "EUR",
         });
-        (window as any).fbq("track", "Lead");
+        window.fbq("track", "Lead");
       }
     }
   }, []);
