@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import {
   Shield,
@@ -941,17 +941,17 @@ function Index() {
           Доставките се извършват с Еконт и Спиди с право на преглед и тест.
         </p>
         <div className="flex flex-wrap gap-4 mt-2 justify-center">
-          <a href="#product" className="hover:underline font-semibold">
-            Условия за ползване
-          </a>
+          <Link to="/terms" className="hover:underline font-semibold">
+            Общи условия
+          </Link>
           <span>•</span>
-          <a href="#product" className="hover:underline font-semibold">
+          <Link to="/privacy" className="hover:underline font-semibold">
             Поверителност
-          </a>
+          </Link>
           <span>•</span>
-          <a href="#product" className="hover:underline font-semibold">
-            Контакти
-          </a>
+          <Link to="/cookies" className="hover:underline font-semibold">
+            Бисквитки
+          </Link>
         </div>
       </footer>
     </div>
