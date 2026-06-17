@@ -8,7 +8,7 @@ import {
   Scripts,
   useLocation,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportHiggsfieldError } from "../lib/higgsfield-error-reporting";
@@ -115,29 +115,6 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              !function(f,b,e,v,n,t,s)
-              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-              n.queue=[];t=b.createElement(e);t.async=!0;
-              t.src=v;s=b.getElementsByTagName(e)[0];
-              s.parentNode.insertBefore(t,s)}(window, document,'script',
-              'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '894010667065255');
-            `,
-          }}
-        />
-        <noscript>
-          <img
-            height="1"
-            width="1"
-            style={{ display: "none" }}
-            src="https://www.facebook.com/tr?id=894010667065255&ev=PageView&noscript=1"
-          />
-        </noscript>
       </head>
       <body>
         {children}
@@ -147,20 +124,151 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+function initializeMetaPixel() {
+  if (typeof window === "undefined") return;
+  if (window.fbq) return;
+
+  /* eslint-disable */
+  // @ts-ignore
+  !(function (f, b, e, v, n, t, s) {
+    if (f.fbq) return;
+    n = f.fbq = function () {
+      n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+    };
+    if (!f._fbq) f._fbq = n;
+    n.push = n;
+    n.loaded = !0;
+    n.version = "2.0";
+    n.queue = [];
+    t = b.createElement(e);
+    t.async = !0;
+    t.src = v;
+    s = b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t, s);
+  })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+  /* eslint-enable */
+
+  if (window.fbq) {
+    window.fbq("init", "894010667065255");
+  }
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const location = useLocation();
 
+  const [consent, setConsent] = useState<string | null>(null);
+  const [showBanner, setShowBanner] = useState(false);
+  const [showLearnMore, setShowLearnMore] = useState(false);
+
   useEffect(() => {
-    if (typeof window !== "undefined" && typeof window.fbq === "function") {
+    if (typeof window !== "undefined") {
+      const savedConsent = localStorage.getItem("cookie-consent");
+      setConsent(savedConsent);
+      if (!savedConsent) {
+        setShowBanner(true);
+      } else if (savedConsent === "granted") {
+        initializeMetaPixel();
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (
+      consent === "granted" &&
+      typeof window !== "undefined" &&
+      typeof window.fbq === "function"
+    ) {
       window.fbq("track", "PageView");
     }
-  }, [location.pathname]);
+  }, [location.pathname, consent]);
+
+  const handleAccept = () => {
+    localStorage.setItem("cookie-consent", "granted");
+    setConsent("granted");
+    setShowBanner(false);
+    initializeMetaPixel();
+  };
+
+  const handleDecline = () => {
+    localStorage.setItem("cookie-consent", "denied");
+    setConsent("denied");
+    setShowBanner(false);
+  };
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
+      {showBanner && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 max-w-lg w-[calc(100%-2rem)] z-50 bg-[#121214]/95 backdrop-blur-md border border-white/10 rounded-2xl p-6 shadow-2xl animate-fade-in flex flex-col gap-4 text-white font-sans antialiased">
+          <div className="flex items-start gap-3">
+            <div className="mt-0.5 w-5 h-5 flex-shrink-0 flex items-center justify-center rounded-full bg-[#00D8FF]/10 border border-[#00D8FF]/30 text-[#00D8FF] text-xs font-bold font-mono">
+              i
+            </div>
+            <div className="flex-1 flex flex-col gap-1.5 text-left">
+              <h4 className="text-sm font-black uppercase tracking-wider text-white">
+                Използване на бисквитки
+              </h4>
+              <p className="text-xs text-white/70 leading-relaxed font-medium">
+                Ние използваме бисквитки, за да подобрим вашето изживяване на нашия сайт.
+                Разрешаването им ни помага да анализираме трафика чрез Meta Pixel.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-end gap-2.5 mt-2">
+            <button
+              onClick={() => setShowLearnMore(!showLearnMore)}
+              className="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider text-white/60 hover:text-white bg-white/5 hover:bg-white/10 border border-white/5 transition-all cursor-pointer"
+            >
+              {showLearnMore ? "Скрий" : "Научи повече"}
+            </button>
+            <button
+              onClick={handleAccept}
+              className="px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider text-white bg-gradient-to-r from-[#FF0F6A] to-[#8000FF] hover:from-[#ff2a7f] hover:to-[#9622ff] shadow-lg shadow-[#FF0F6A]/20 transition-all active:scale-95 cursor-pointer"
+            >
+              Разрешавам
+            </button>
+          </div>
+
+          {showLearnMore && (
+            <div className="mt-4 pt-4 border-t border-white/5 flex flex-col gap-3">
+              <p className="text-[11px] text-white/50 leading-relaxed font-semibold text-left">
+                Запознайте се с нашите политики:
+              </p>
+              <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs font-bold text-white/80">
+                <Link
+                  to="/cookies"
+                  className="hover:text-[#00D8FF] transition-colors underline"
+                  onClick={() => setShowBanner(false)}
+                >
+                  Политика за бисквитки
+                </Link>
+                <Link
+                  to="/privacy"
+                  className="hover:text-[#00D8FF] transition-colors underline"
+                  onClick={() => setShowBanner(false)}
+                >
+                  Поверителност
+                </Link>
+                <Link
+                  to="/terms"
+                  className="hover:text-[#00D8FF] transition-colors underline"
+                  onClick={() => setShowBanner(false)}
+                >
+                  Общи условия
+                </Link>
+              </div>
+              <button
+                onClick={handleDecline}
+                className="mt-2 w-full bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 border border-red-500/20 py-2.5 rounded-xl font-bold text-xs tracking-wider uppercase transition-all cursor-pointer text-center"
+              >
+                Отказвам бисквитките
+              </button>
+            </div>
+          )}
+        </div>
+      )}
     </QueryClientProvider>
   );
 }

@@ -41,6 +41,14 @@ export const Route = createFileRoute("/")({
       },
       { property: "og:image", content: "/media/hero.webp" },
     ],
+    links: [
+      {
+        rel: "preload",
+        as: "image",
+        href: "/media/hero.webp",
+        type: "image/webp",
+      },
+    ],
   }),
   component: Index,
 });
@@ -201,31 +209,28 @@ function Index() {
           </h1>
           <p className="text-white/70 text-base md:text-lg leading-relaxed max-w-xl font-medium">
             Ултра лека спортна конструкция с иридиева леща, проектирана да устои на вятър, прах и
-            отблясъци. Съчетава аеродинамична прецизност за спорт (колоездене, бягане) с безкомпромисна
-            модерна визия за фестивали, партита, ежедневно носене и перфектно допълнение към твоя аутфит за излизане.
+            отблясъци. Съчетава аеродинамична прецизност за спорт (колоездене, бягане) с
+            безкомпромисна модерна визия за фестивали, партита, ежедневно носене и перфектно
+            допълнение към твоя аутфит за излизане.
           </p>
 
           <div className="grid grid-cols-3 gap-4 border-y border-white/10 py-6 my-2">
             <div className="flex flex-col items-center text-center p-2 bg-white/5 rounded-lg border border-white/5">
-              <img src="/media/weight.png" className="w-7 h-7 object-contain mb-1" alt="Тегло" />
+              <Feather className="w-7 h-7 text-[#FF0F6A] mb-1" />
               <span className="text-[10px] font-bold tracking-widest uppercase text-white/50">
                 Тегло
               </span>
               <span className="text-sm font-black mt-0.5">САМО 28g</span>
             </div>
             <div className="flex flex-col items-center text-center p-2 bg-white/5 rounded-lg border border-white/5">
-              <img
-                src="/media/protection.png"
-                className="w-7 h-7 object-contain mb-1"
-                alt="Защита"
-              />
+              <Shield className="w-7 h-7 text-[#00D8FF] mb-1" />
               <span className="text-[10px] font-bold tracking-widest uppercase text-white/50">
                 Защита
               </span>
               <span className="text-sm font-black mt-0.5">UV400 КЛАС</span>
             </div>
             <div className="flex flex-col items-center text-center p-2 bg-white/5 rounded-lg border border-white/5">
-              <img src="/media/grip.png" className="w-7 h-7 object-contain mb-1" alt="Грип" />
+              <Activity className="w-7 h-7 text-[#8000FF] mb-1" />
               <span className="text-[10px] font-bold tracking-widest uppercase text-white/50">
                 Грип
               </span>
@@ -262,6 +267,7 @@ function Index() {
               src="/media/hero.webp"
               alt="Kinetic Sunglasses Hero Shot"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              fetchPriority="high"
             />
             {/* Tag Overlay */}
             <div className="absolute bottom-4 left-4 bg-black/80 backdrop-blur-md border border-white/10 px-4 py-2 rounded-xl flex items-center gap-2">
@@ -318,7 +324,9 @@ function Index() {
             </span>
           </h2>
           <p className="text-white/60 text-sm md:text-base max-w-xl font-medium">
-            Ултрамодерен дизайн, идеален както за интензивен спорт, така и за ежедневни градски визии, партита и аутфити от висок клас. Всички очила KINETIC пристигат с оригинален твърд спортен калъф, брандирана микрофибърна кърпа и стикер пакет.
+            Ултрамодерен дизайн, идеален както за интензивен спорт, така и за ежедневни градски
+            визии, партита и аутфити от висок клас. Всички очила KINETIC пристигат с оригинален
+            твърд спортен калъф, брандирана микрофибърна кърпа и стикер пакет.
           </p>
         </div>
 
@@ -330,6 +338,7 @@ function Index() {
                 src={selectedColor.image}
                 alt={selectedColor.name}
                 className="w-full h-full object-contain transition-all duration-500 group-hover:scale-105"
+                loading="lazy"
               />
               <div className="absolute top-4 left-4 bg-[#FF0F6A] text-xs font-black uppercase px-3 py-1 rounded-full">
                 -40% НАМАЛЕНИЕ
@@ -353,6 +362,7 @@ function Index() {
                     src={color.image}
                     alt={color.name}
                     className="w-full h-full object-contain"
+                    loading="lazy"
                   />
                 </div>
               ))}
@@ -377,8 +387,12 @@ function Index() {
 
             {/* Pricing block */}
             <div className="flex items-baseline gap-2 sm:gap-4 border-b border-white/10 pb-4 flex-wrap">
-              <span className="text-3xl sm:text-4xl font-black text-[#FF0F6A] whitespace-nowrap">17.90 €</span>
-              <span className="text-base sm:text-lg text-white/40 line-through whitespace-nowrap">27.90 €</span>
+              <span className="text-3xl sm:text-4xl font-black text-[#FF0F6A] whitespace-nowrap">
+                17.90 €
+              </span>
+              <span className="text-base sm:text-lg text-white/40 line-through whitespace-nowrap">
+                27.90 €
+              </span>
               <span className="text-[10px] sm:text-xs font-bold bg-[#FF0F6A]/10 text-[#FF0F6A] px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full uppercase whitespace-nowrap">
                 Спестяваш 10 €!
               </span>
@@ -501,9 +515,10 @@ function Index() {
           <div className="lg:col-span-5 order-2 lg:order-1">
             <div className="w-full aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 relative group">
               <img
-                src="/media/macro.jpg"
+                src="/media/macro.webp"
                 alt="Kinetic Glasses Style Showcase"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                loading="lazy"
               />
             </div>
           </div>
@@ -574,58 +589,105 @@ function Index() {
             👍 От какво са МНОГО ДОВОЛНИ повечето хора
           </h2>
           <p className="text-white/60 text-sm md:text-base max-w-xl font-medium">
-            Реални споделени отзиви и предимства, които правят KINETIC очилата перфектният избор за спорт, мода и ежедневие.
+            Реални споделени отзиви и предимства, които правят KINETIC очилата перфектният избор за
+            спорт, мода и ежедневие.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="flex flex-col gap-3 p-6 bg-[#121214] border border-white/5 rounded-2xl hover:border-white/15 transition-all duration-300">
             <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-2">
-              <img src="/media/advantage_weight.png" className="w-10 h-10 object-contain" alt="" />
+              <img
+                src="/media/advantage_weight.png"
+                className="w-10 h-10 object-contain"
+                alt=""
+                loading="lazy"
+              />
             </div>
-            <h4 className="text-lg font-black uppercase tracking-wide">Изключителна лекота и комфорт</h4>
+            <h4 className="text-lg font-black uppercase tracking-wide">
+              Изключителна лекота и комфорт
+            </h4>
             <p className="text-xs text-white/60 leading-relaxed font-semibold">
-              Очилата тежат около 28-35 грама. Потребителите споделят, че се усещат „едва забележимо“ на лицето. Благодарение на гъвкавата пластмаса (често TR90), те не притискат или стискат слепоочията и задната част на ушите, дори когато се носят дълго време под спортна каска.
+              Очилата тежат около 28-35 грама. Потребителите споделят, че се усещат „едва
+              забележимо“ на лицето. Благодарение на гъвкавата пластмаса (често TR90), те не
+              притискат или стискат слепоочията и задната част на ушите, дори когато се носят дълго
+              време под спортна каска.
             </p>
           </div>
 
           <div className="flex flex-col gap-3 p-6 bg-[#121214] border border-white/5 rounded-2xl hover:border-white/15 transition-all duration-300">
             <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-2">
-              <img src="/media/advantage_wind.png" className="w-10 h-10 object-contain" alt="" />
+              <img
+                src="/media/advantage_wind.png"
+                className="w-10 h-10 object-contain"
+                alt=""
+                loading="lazy"
+              />
             </div>
-            <h4 className="text-lg font-black uppercase tracking-wide">Пълна защита от вятър и прах</h4>
+            <h4 className="text-lg font-black uppercase tracking-wide">
+              Пълна защита от вятър и прах
+            </h4>
             <p className="text-xs text-white/60 leading-relaxed font-semibold">
-              Голямата „monoshield“ леща тип маска осигурява страхотно периферно покритие. Спортистите са изключително доволни, че очилата спират страничния вятър, прашинките и насекомите, предпазвайки очите от изсъхване и дискомфорт при висока скорост.
+              Голямата „monoshield“ леща тип маска осигурява страхотно периферно покритие.
+              Спортистите са изключително доволни, че очилата спират страничния вятър, прашинките и
+              насекомите, предпазвайки очите от изсъхване и дискомфорт при висока скорост.
             </p>
           </div>
 
           <div className="flex flex-col gap-3 p-6 bg-[#121214] border border-white/5 rounded-2xl hover:border-white/15 transition-all duration-300">
             <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-2">
-              <img src="/media/advantage_grip.png" className="w-10 h-10 object-contain" alt="" />
+              <img
+                src="/media/advantage_grip.png"
+                className="w-10 h-10 object-contain"
+                alt=""
+                loading="lazy"
+              />
             </div>
-            <h4 className="text-lg font-black uppercase tracking-wide">Стабилност без приплъзване (No-Bounce)</h4>
+            <h4 className="text-lg font-black uppercase tracking-wide">
+              Стабилност без приплъзване (No-Bounce)
+            </h4>
             <p className="text-xs text-white/60 leading-relaxed font-semibold">
-              Специално гумираната вложка на носа и накрайниците на дръжките си вършат работата отлично. Хората отбелязват, че очилата не мърдат, не се плъзгат и не подскачат дори при най-интензивното бягане или потни тренировки.
+              Специално гумираната вложка на носа и накрайниците на дръжките си вършат работата
+              отлично. Хората отбелязват, че очилата не мърдат, не се плъзгат и не подскачат дори
+              при най-интензивното бягане или потни тренировки.
             </p>
           </div>
 
           <div className="flex flex-col gap-3 p-6 bg-[#121214] border border-white/5 rounded-2xl hover:border-white/15 transition-all duration-300 lg:col-span-1">
             <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-2">
-              <img src="/media/advantage_contrast.png" className="w-10 h-10 object-contain" alt="" />
+              <img
+                src="/media/advantage_contrast.png"
+                className="w-10 h-10 object-contain"
+                alt=""
+                loading="lazy"
+              />
             </div>
-            <h4 className="text-lg font-black uppercase tracking-wide">Перфектен контраст на терена</h4>
+            <h4 className="text-lg font-black uppercase tracking-wide">
+              Перфектен контраст на терена
+            </h4>
             <p className="text-xs text-white/60 leading-relaxed font-semibold">
-              Поневе лещите не са поляризирани (което понякога затъмнява екраните на телефони и велокомпютри), те предлагат кристален контраст. Потребителите споделят, че виждат релефа на пътя, дупките и сенките много по-ясно.
+              Поневе лещите не са поляризирани (което понякога затъмнява екраните на телефони и
+              велокомпютри), те предлагат кристален контраст. Потребителите споделят, че виждат
+              релефа на пътя, дупките и сенките много по-ясно.
             </p>
           </div>
 
           <div className="flex flex-col gap-3 p-6 bg-[#121214] border border-white/5 rounded-2xl hover:border-white/15 transition-all duration-300 lg:col-span-2 md:col-span-2">
             <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-2">
-              <img src="/media/advantage_sparkle.png" className="w-10 h-10 object-contain" alt="" />
+              <img
+                src="/media/advantage_sparkle.png"
+                className="w-10 h-10 object-contain"
+                alt=""
+                loading="lazy"
+              />
             </div>
-            <h4 className="text-lg font-black uppercase tracking-wide">Висококласна визия на достъпна цена</h4>
+            <h4 className="text-lg font-black uppercase tracking-wide">
+              Висококласна визия на достъпна цена
+            </h4>
             <p className="text-xs text-white/60 leading-relaxed font-semibold">
-              Хората обожават факта, че получават ултрамодерен, футуристичен спортен дизайн (подобен на луксозните модели за по $150-$200) на символична цена. Очилата изглеждат изключително „скъпи“ и стоят страхотно на снимки и видеоклипове.
+              Хората обожават факта, че получават ултрамодерен, футуристичен спортен дизайн (подобен
+              на луксозните модели за по $150-$200) на символична цена. Очилата изглеждат
+              изключително „скъпи“ и стоят страхотно на снимки и видеоклипове.
             </p>
           </div>
         </div>
@@ -689,7 +751,9 @@ function Index() {
           ) : (
             <div className="w-full max-w-lg bg-[#121214] border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col gap-6 text-left relative mt-4">
               <div className="flex justify-between items-center border-b border-white/5 pb-3">
-                <h3 className="text-lg font-black uppercase tracking-wide">Сподели твоето мнение</h3>
+                <h3 className="text-lg font-black uppercase tracking-wide">
+                  Сподели твоето мнение
+                </h3>
                 <button
                   type="button"
                   onClick={() => {
@@ -707,9 +771,12 @@ function Index() {
                   <div className="w-12 h-12 bg-green-500/10 border border-green-500/30 rounded-full flex items-center justify-center text-green-500">
                     <CheckCircle2 className="w-6 h-6" />
                   </div>
-                  <h4 className="font-bold text-sm uppercase tracking-wide text-green-500">Отзивът е изпратен!</h4>
+                  <h4 className="font-bold text-sm uppercase tracking-wide text-green-500">
+                    Отзивът е изпратен!
+                  </h4>
                   <p className="text-xs text-white/60 leading-relaxed font-semibold max-w-sm">
-                    Благодарим Ви! Вашият отзив беше изпратен успешно за преглед и одобрение и ще бъде публикуван след проверка от администратор.
+                    Благодарим Ви! Вашият отзив беше изпратен успешно за преглед и одобрение и ще
+                    бъде публикуван след проверка от администратор.
                   </p>
                 </div>
               ) : (
@@ -726,7 +793,9 @@ function Index() {
                   className="flex flex-col gap-4"
                 >
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-black uppercase tracking-wider text-white/60">Име и Фамилия</label>
+                    <label className="text-[10px] font-black uppercase tracking-wider text-white/60">
+                      Име и Фамилия
+                    </label>
                     <input
                       type="text"
                       required
@@ -738,7 +807,9 @@ function Index() {
                   </div>
 
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-black uppercase tracking-wider text-white/60">Телефонен номер</label>
+                    <label className="text-[10px] font-black uppercase tracking-wider text-white/60">
+                      Телефонен номер
+                    </label>
                     <input
                       type="tel"
                       required
@@ -750,7 +821,9 @@ function Index() {
                   </div>
 
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-black uppercase tracking-wider text-white/60">Оценка</label>
+                    <label className="text-[10px] font-black uppercase tracking-wider text-white/60">
+                      Оценка
+                    </label>
                     <div className="flex gap-1.5">
                       {[1, 2, 3, 4, 5].map((stars) => (
                         <button
@@ -761,7 +834,9 @@ function Index() {
                         >
                           <Star
                             className={`w-6 h-6 ${
-                              reviewRating >= stars ? "fill-yellow-500 text-yellow-500" : "text-white/20"
+                              reviewRating >= stars
+                                ? "fill-yellow-500 text-yellow-500"
+                                : "text-white/20"
                             }`}
                           />
                         </button>
@@ -770,7 +845,9 @@ function Index() {
                   </div>
 
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-black uppercase tracking-wider text-white/60">Текст на отзива</label>
+                    <label className="text-[10px] font-black uppercase tracking-wider text-white/60">
+                      Текст на отзива
+                    </label>
                     <textarea
                       required
                       rows={3}
@@ -789,7 +866,10 @@ function Index() {
                       onChange={(e) => setHasOrdered(e.target.checked)}
                       className="w-4 h-4 rounded border-white/10 bg-[#1d1d21] text-[#FF0F6A] focus:ring-0 focus:ring-offset-0"
                     />
-                    <label htmlFor="hasOrdered" className="text-xs font-semibold text-white/80 cursor-pointer select-none">
+                    <label
+                      htmlFor="hasOrdered"
+                      className="text-xs font-semibold text-white/80 cursor-pointer select-none"
+                    >
                       Правили ли сте поръчка от сайта ни с този номер?
                     </label>
                   </div>

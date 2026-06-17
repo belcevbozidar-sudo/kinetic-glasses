@@ -23,8 +23,9 @@ function ThankYou() {
         setOrderDetails({ name, color: color || "" });
       }
 
-      // Track Sales (Purchase) and Lead on Meta Pixel
-      if (typeof window !== "undefined" && typeof window.fbq === "function") {
+      // Track Sales (Purchase) and Lead on Meta Pixel if consent is granted
+      const savedConsent = localStorage.getItem("cookie-consent");
+      if (savedConsent === "granted" && typeof window.fbq === "function") {
         window.fbq("track", "Purchase", {
           value: 17.9,
           currency: "EUR",
