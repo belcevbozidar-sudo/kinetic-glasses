@@ -80,14 +80,14 @@ const COLORS = [
   {
     id: "black",
     name: "Volt Ice Blue",
-    code: "linear-gradient(135deg, #ffffff 50%, #00d8ff 50%)",
+    code: "#00d8ff",
     image: "/media/packshot_white_blue.jpg",
     status: "В наличност - Ограничено количество",
   },
   {
     id: "cyan",
     name: "Acid Neon Green",
-    code: "linear-gradient(135deg, #ffffff 50%, #10b981 50%)",
+    code: "#10b981",
     image: "/media/packshot_white_green.jpg",
     status: "В наличност",
   },
@@ -103,6 +103,13 @@ function Index() {
   const [orderSuccess, setOrderSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [timeLeft, setTimeLeft] = useState(7200); // 2 hours countdown
+  const [showReviewForm, setShowReviewForm] = useState(false);
+  const [reviewName, setReviewName] = useState("");
+  const [reviewPhone, setReviewPhone] = useState("");
+  const [reviewText, setReviewText] = useState("");
+  const [reviewRating, setReviewRating] = useState(5);
+  const [hasOrdered, setHasOrdered] = useState(false);
+  const [reviewSubmitted, setReviewSubmitted] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -155,9 +162,6 @@ function Index() {
           <span className="text-2xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-[#FF0F6A] to-[#00D8FF]">
             KINETIC
           </span>
-          <span className="text-[8px] bg-white/10 px-1.5 py-0.5 rounded text-white/60 font-mono tracking-widest">
-            v1.1
-          </span>
         </div>
         <nav className="hidden md:flex items-center gap-6 text-sm font-semibold tracking-wide text-white/80">
           <a href="#product" className="hover:text-white transition-colors">
@@ -186,7 +190,7 @@ function Index() {
         <div className="lg:col-span-6 flex flex-col gap-6">
           <div className="inline-flex items-center gap-2 bg-[#FF0F6A]/10 border border-[#FF0F6A]/30 text-[#FF0F6A] px-3 py-1.5 rounded-full text-xs font-bold w-fit">
             <Flame className="w-3.5 h-3.5 fill-[#FF0F6A]" />
-            <span>НАЙ-ЖЕЛАНИЯТ СПОРТЕН АКСЕСОАР ЗА СЕЗОНА</span>
+            <span>НАЙ-ЖЕЛАНИЯТ СПОРТЕН И МОДЕН АКСЕСОАР ЗА СЕЗОНА</span>
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-none uppercase">
             ОЧИЛАТА ОТ <br className="hidden sm:inline" />
@@ -197,8 +201,8 @@ function Index() {
           </h1>
           <p className="text-white/70 text-base md:text-lg leading-relaxed max-w-xl font-medium">
             Ултра лека спортна конструкция с иридиева леща, проектирана да устои на вятър, прах и
-            отблясъци. Съчетава аеродинамична прецизност за колоездене и бягане с безкомпромисна
-            стрийтуеър визия за фестивали.
+            отблясъци. Съчетава аеродинамична прецизност за спорт (колоездене, бягане) с безкомпромисна
+            модерна визия за фестивали, партита, ежедневно носене и перфектно допълнение към твоя аутфит за излизане.
           </p>
 
           <div className="grid grid-cols-3 gap-4 border-y border-white/10 py-6 my-2">
@@ -314,8 +318,7 @@ function Index() {
             </span>
           </h2>
           <p className="text-white/60 text-sm md:text-base max-w-xl font-medium">
-            Всички очила KINETIC пристигат с оригинален твърд спортен калъф, брандирана микрофибърна
-            кърпа и стикер пакет.
+            Ултрамодерен дизайн, идеален както за интензивен спорт, така и за ежедневни градски визии, партита и аутфити от висок клас. Всички очила KINETIC пристигат с оригинален твърд спортен калъф, брандирана микрофибърна кърпа и стикер пакет.
           </p>
         </div>
 
@@ -373,10 +376,10 @@ function Index() {
             </div>
 
             {/* Pricing block */}
-            <div className="flex items-baseline gap-4 border-b border-white/10 pb-4">
-              <span className="text-4xl font-black text-[#FF0F6A]">17.90 €</span>
-              <span className="text-lg text-white/40 line-through">27.90 €</span>
-              <span className="text-xs font-bold bg-[#FF0F6A]/10 text-[#FF0F6A] px-2.5 py-1 rounded-full uppercase">
+            <div className="flex items-baseline gap-2 sm:gap-4 border-b border-white/10 pb-4 flex-wrap">
+              <span className="text-3xl sm:text-4xl font-black text-[#FF0F6A] whitespace-nowrap">17.90 €</span>
+              <span className="text-base sm:text-lg text-white/40 line-through whitespace-nowrap">27.90 €</span>
+              <span className="text-[10px] sm:text-xs font-bold bg-[#FF0F6A]/10 text-[#FF0F6A] px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full uppercase whitespace-nowrap">
                 Спестяваш 10 €!
               </span>
             </div>
@@ -409,7 +412,7 @@ function Index() {
               <form onSubmit={handleQuickOrder} className="flex flex-col gap-4 mt-2">
                 <div className="text-xs font-black uppercase text-[#00D8FF] tracking-widest border-b border-[#00D8FF]/20 pb-2 flex items-center gap-1.5">
                   <Zap className="w-4 h-4 fill-[#00D8FF]" />
-                  <span>ЕКСПРЕСНА ПОРЪЧКА БЕЗ ПРЕПЛАЩАНЕ</span>
+                  <span>ЕКСПРЕСНА ПОРЪЧКА</span>
                 </div>
                 <p className="text-[11px] text-white/50 leading-tight font-medium">
                   Плащане на куриер (наложен платеж) след като отвориш кутията, прегледаш и пробваш
@@ -446,7 +449,7 @@ function Index() {
 
                 <div className="flex flex-col gap-1.5">
                   <label className="text-[10px] font-black uppercase tracking-wider text-white/60">
-                    Офис на Еконт / Спиди (или точен адрес)
+                    Офис на Еконт / Спиди
                   </label>
                   <input
                     type="text"
@@ -571,20 +574,20 @@ function Index() {
       <section className="py-24 px-4 md:px-8 max-w-7xl mx-auto border-t border-white/10">
         <div className="text-center mb-16 flex flex-col items-center gap-4">
           <span className="text-xs font-black uppercase tracking-widest text-[#00D8FF]">
-            СПОРТНИ ПРЕДИМСТВА
+            СПОРТНИ И МОДНИ ПРЕДИМСТВА
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight">
-            👍 От какво са МНОГО ДОВОЛНИ хората
+            👍 От какво са МНОГО ДОВОЛНИ повечето хора
           </h2>
           <p className="text-white/60 text-sm md:text-base max-w-xl font-medium">
-            Реални споделени отзиви и предимства, които правят KINETIC очилата перфектният избор за спорт и ежедневие.
+            Реални споделени отзиви и предимства, които правят KINETIC очилата перфектният избор за спорт, мода и ежедневие.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="flex flex-col gap-3 p-6 bg-[#121214] border border-white/5 rounded-2xl hover:border-white/15 transition-all duration-300">
-            <div className="w-10 h-10 rounded-xl bg-[#FF0F6A]/10 border border-[#FF0F6A]/20 flex items-center justify-center text-[#FF0F6A] mb-2">
-              <Feather className="w-5 h-5" />
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-2">
+              <img src="/media/advantage_weight.png" className="w-10 h-10 object-contain" alt="" />
             </div>
             <h4 className="text-lg font-black uppercase tracking-wide">Изключителна лекота и комфорт</h4>
             <p className="text-xs text-white/60 leading-relaxed font-semibold">
@@ -593,8 +596,8 @@ function Index() {
           </div>
 
           <div className="flex flex-col gap-3 p-6 bg-[#121214] border border-white/5 rounded-2xl hover:border-white/15 transition-all duration-300">
-            <div className="w-10 h-10 rounded-xl bg-[#00D8FF]/10 border border-[#00D8FF]/20 flex items-center justify-center text-[#00D8FF] mb-2">
-              <Wind className="w-5 h-5" />
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-2">
+              <img src="/media/advantage_wind.png" className="w-10 h-10 object-contain" alt="" />
             </div>
             <h4 className="text-lg font-black uppercase tracking-wide">Пълна защита от вятър и прах</h4>
             <p className="text-xs text-white/60 leading-relaxed font-semibold">
@@ -603,8 +606,8 @@ function Index() {
           </div>
 
           <div className="flex flex-col gap-3 p-6 bg-[#121214] border border-white/5 rounded-2xl hover:border-white/15 transition-all duration-300">
-            <div className="w-10 h-10 rounded-xl bg-[#8000FF]/10 border border-[#8000FF]/20 flex items-center justify-center text-[#8000FF] mb-2">
-              <Activity className="w-5 h-5" />
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-2">
+              <img src="/media/advantage_grip.png" className="w-10 h-10 object-contain" alt="" />
             </div>
             <h4 className="text-lg font-black uppercase tracking-wide">Стабилност без приплъзване (No-Bounce)</h4>
             <p className="text-xs text-white/60 leading-relaxed font-semibold">
@@ -613,18 +616,18 @@ function Index() {
           </div>
 
           <div className="flex flex-col gap-3 p-6 bg-[#121214] border border-white/5 rounded-2xl hover:border-white/15 transition-all duration-300 lg:col-span-1">
-            <div className="w-10 h-10 rounded-xl bg-green-500/10 border border-green-500/20 flex items-center justify-center text-green-500 mb-2">
-              <Eye className="w-5 h-5" />
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-2">
+              <img src="/media/advantage_contrast.png" className="w-10 h-10 object-contain" alt="" />
             </div>
             <h4 className="text-lg font-black uppercase tracking-wide">Перфектен контраст на терена</h4>
             <p className="text-xs text-white/60 leading-relaxed font-semibold">
-              Понеже лещите не са поляризирани (което понякога затъмнява екраните на телефони и велокомпютри), те предлагат кристален контраст. Потребителите споделят, че виждат релефа на пътя, дупките и сенките много по-ясно.
+              Поневе лещите не са поляризирани (което понякога затъмнява екраните на телефони и велокомпютри), те предлагат кристален контраст. Потребителите споделят, че виждат релефа на пътя, дупките и сенките много по-ясно.
             </p>
           </div>
 
           <div className="flex flex-col gap-3 p-6 bg-[#121214] border border-white/5 rounded-2xl hover:border-white/15 transition-all duration-300 lg:col-span-2 md:col-span-2">
-            <div className="w-10 h-10 rounded-xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center text-yellow-500 mb-2">
-              <Sparkles className="w-5 h-5" />
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-2">
+              <img src="/media/advantage_sparkle.png" className="w-10 h-10 object-contain" alt="" />
             </div>
             <h4 className="text-lg font-black uppercase tracking-wide">Висококласна визия на достъпна цена</h4>
             <p className="text-xs text-white/60 leading-relaxed font-semibold">
@@ -678,6 +681,135 @@ function Index() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Leave a Review Section */}
+        <div className="mt-12 flex flex-col items-center">
+          {!showReviewForm ? (
+            <button
+              onClick={() => setShowReviewForm(true)}
+              className="bg-[#121214] border border-white/10 hover:border-white/20 px-8 py-3 rounded-full text-xs font-black tracking-widest uppercase transition-all active:scale-95 cursor-pointer"
+            >
+              Остави отзив
+            </button>
+          ) : (
+            <div className="w-full max-w-lg bg-[#121214] border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col gap-6 text-left relative mt-4">
+              <div className="flex justify-between items-center border-b border-white/5 pb-3">
+                <h3 className="text-lg font-black uppercase tracking-wide">Сподели твоето мнение</h3>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowReviewForm(false);
+                    setReviewSubmitted(false);
+                  }}
+                  className="text-xs font-bold text-white/40 hover:text-white transition-colors"
+                >
+                  Затвори
+                </button>
+              </div>
+
+              {reviewSubmitted ? (
+                <div className="text-center py-6 flex flex-col items-center gap-4">
+                  <div className="w-12 h-12 bg-green-500/10 border border-green-500/30 rounded-full flex items-center justify-center text-green-500">
+                    <CheckCircle2 className="w-6 h-6" />
+                  </div>
+                  <h4 className="font-bold text-sm uppercase tracking-wide text-green-500">Отзивът е изпратен!</h4>
+                  <p className="text-xs text-white/60 leading-relaxed font-semibold max-w-sm">
+                    Благодарим Ви! Вашият отзив беше изпратен успешно за преглед и одобрение и ще бъде публикуван след проверка от администратор.
+                  </p>
+                </div>
+              ) : (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    setReviewSubmitted(true);
+                    setReviewName("");
+                    setReviewPhone("");
+                    setReviewText("");
+                    setReviewRating(5);
+                    setHasOrdered(false);
+                  }}
+                  className="flex flex-col gap-4"
+                >
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-[10px] font-black uppercase tracking-wider text-white/60">Име и Фамилия</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Иван Иванов"
+                      value={reviewName}
+                      onChange={(e) => setReviewName(e.target.value)}
+                      className="bg-[#1d1d21] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#FF0F6A] transition-colors font-semibold"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-[10px] font-black uppercase tracking-wider text-white/60">Телефонен номер</label>
+                    <input
+                      type="tel"
+                      required
+                      placeholder="08XXXXXXXX"
+                      value={reviewPhone}
+                      onChange={(e) => setReviewPhone(e.target.value)}
+                      className="bg-[#1d1d21] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#FF0F6A] transition-colors font-semibold"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-[10px] font-black uppercase tracking-wider text-white/60">Оценка</label>
+                    <div className="flex gap-1.5">
+                      {[1, 2, 3, 4, 5].map((stars) => (
+                        <button
+                          key={stars}
+                          type="button"
+                          onClick={() => setReviewRating(stars)}
+                          className="focus:outline-none"
+                        >
+                          <Star
+                            className={`w-6 h-6 ${
+                              reviewRating >= stars ? "fill-yellow-500 text-yellow-500" : "text-white/20"
+                            }`}
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-[10px] font-black uppercase tracking-wider text-white/60">Текст на отзива</label>
+                    <textarea
+                      required
+                      rows={3}
+                      placeholder="Споделете вашите впечатления..."
+                      value={reviewText}
+                      onChange={(e) => setReviewText(e.target.value)}
+                      className="bg-[#1d1d21] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#FF0F6A] transition-colors font-semibold resize-none"
+                    />
+                  </div>
+
+                  <div className="flex items-center gap-2.5 mt-1">
+                    <input
+                      type="checkbox"
+                      id="hasOrdered"
+                      checked={hasOrdered}
+                      onChange={(e) => setHasOrdered(e.target.checked)}
+                      className="w-4 h-4 rounded border-white/10 bg-[#1d1d21] text-[#FF0F6A] focus:ring-0 focus:ring-offset-0"
+                    />
+                    <label htmlFor="hasOrdered" className="text-xs font-semibold text-white/80 cursor-pointer select-none">
+                      Правили ли сте поръчка от сайта ни с този номер?
+                    </label>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full bg-gradient-to-r from-[#FF0F6A] to-[#8000FF] hover:from-[#ff2a7f] hover:to-[#9622ff] transition-all duration-300 py-3.5 rounded-xl font-black text-xs tracking-widest uppercase shadow-lg shadow-[#FF0F6A]/20 active:scale-[0.98] mt-2"
+                  >
+                    Изпрати за одобрение
+                  </button>
+                </form>
+              )}
+            </div>
+          )}
         </div>
       </section>
 
