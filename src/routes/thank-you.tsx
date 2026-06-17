@@ -22,6 +22,15 @@ function ThankYou() {
       if (name) {
         setOrderDetails({ name, color: color || "" });
       }
+
+      // Track Sales (Purchase) and Lead on Meta Pixel
+      if (typeof (window as any).fbq === "function") {
+        (window as any).fbq("track", "Purchase", {
+          value: 17.90,
+          currency: "EUR",
+        });
+        (window as any).fbq("track", "Lead");
+      }
     }
   }, []);
 
