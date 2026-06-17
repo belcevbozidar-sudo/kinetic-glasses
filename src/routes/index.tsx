@@ -505,12 +505,6 @@ function Index() {
                 alt="Kinetic Glasses Style Showcase"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute bottom-4 left-4 bg-black/80 backdrop-blur-md border border-white/10 px-4 py-2 rounded-xl flex items-center gap-2">
-                <Maximize2 className="w-3.5 h-3.5 text-[#00D8FF]" />
-                <span className="text-xs font-mono font-bold tracking-wider text-white/90">
-                  STYLE SHOWCASE
-                </span>
-              </div>
             </div>
           </div>
 
