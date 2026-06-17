@@ -18,6 +18,9 @@ import {
   Layers,
   Award,
   Coins,
+  Feather,
+  Wind,
+  Activity,
 } from "lucide-react";
 import { sendTelegramOrder } from "../lib/api/order.functions";
 
@@ -560,6 +563,73 @@ function Index() {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Advantages Section */}
+      <section className="py-24 px-4 md:px-8 max-w-7xl mx-auto border-t border-white/10">
+        <div className="text-center mb-16 flex flex-col items-center gap-4">
+          <span className="text-xs font-black uppercase tracking-widest text-[#00D8FF]">
+            СПОРТНИ ПРЕДИМСТВА
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight">
+            👍 От какво са МНОГО ДОВОЛНИ хората
+          </h2>
+          <p className="text-white/60 text-sm md:text-base max-w-xl font-medium">
+            Реални споделени отзиви и предимства, които правят KINETIC очилата перфектният избор за спорт и ежедневие.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="flex flex-col gap-3 p-6 bg-[#121214] border border-white/5 rounded-2xl hover:border-white/15 transition-all duration-300">
+            <div className="w-10 h-10 rounded-xl bg-[#FF0F6A]/10 border border-[#FF0F6A]/20 flex items-center justify-center text-[#FF0F6A] mb-2">
+              <Feather className="w-5 h-5" />
+            </div>
+            <h4 className="text-lg font-black uppercase tracking-wide">Изключителна лекота и комфорт</h4>
+            <p className="text-xs text-white/60 leading-relaxed font-semibold">
+              Очилата тежат около 28-35 грама. Потребителите споделят, че се усещат „едва забележимо“ на лицето. Благодарение на гъвкавата пластмаса (често TR90), те не притискат или стискат слепоочията и задната част на ушите, дори когато се носят дълго време под спортна каска.
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-3 p-6 bg-[#121214] border border-white/5 rounded-2xl hover:border-white/15 transition-all duration-300">
+            <div className="w-10 h-10 rounded-xl bg-[#00D8FF]/10 border border-[#00D8FF]/20 flex items-center justify-center text-[#00D8FF] mb-2">
+              <Wind className="w-5 h-5" />
+            </div>
+            <h4 className="text-lg font-black uppercase tracking-wide">Пълна защита от вятър и прах</h4>
+            <p className="text-xs text-white/60 leading-relaxed font-semibold">
+              Голямата „monoshield“ леща тип маска осигурява страхотно периферно покритие. Спортистите са изключително доволни, че очилата спират страничния вятър, прашинките и насекомите, предпазвайки очите от изсъхване и дискомфорт при висока скорост.
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-3 p-6 bg-[#121214] border border-white/5 rounded-2xl hover:border-white/15 transition-all duration-300">
+            <div className="w-10 h-10 rounded-xl bg-[#8000FF]/10 border border-[#8000FF]/20 flex items-center justify-center text-[#8000FF] mb-2">
+              <Activity className="w-5 h-5" />
+            </div>
+            <h4 className="text-lg font-black uppercase tracking-wide">Стабилност без приплъзване (No-Bounce)</h4>
+            <p className="text-xs text-white/60 leading-relaxed font-semibold">
+              Специално гумираната вложка на носа и накрайниците на дръжките си вършат работата отлично. Хората отбелязват, че очилата не мърдат, не се плъзгат и не подскачат дори при най-интензивното бягане или потни тренировки.
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-3 p-6 bg-[#121214] border border-white/5 rounded-2xl hover:border-white/15 transition-all duration-300 lg:col-span-1">
+            <div className="w-10 h-10 rounded-xl bg-green-500/10 border border-green-500/20 flex items-center justify-center text-green-500 mb-2">
+              <Eye className="w-5 h-5" />
+            </div>
+            <h4 className="text-lg font-black uppercase tracking-wide">Перфектен контраст на терена</h4>
+            <p className="text-xs text-white/60 leading-relaxed font-semibold">
+              Понеже лещите не са поляризирани (което понякога затъмнява екраните на телефони и велокомпютри), те предлагат кристален контраст. Потребителите споделят, че виждат релефа на пътя, дупките и сенките много по-ясно.
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-3 p-6 bg-[#121214] border border-white/5 rounded-2xl hover:border-white/15 transition-all duration-300 lg:col-span-2 md:col-span-2">
+            <div className="w-10 h-10 rounded-xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center text-yellow-500 mb-2">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <h4 className="text-lg font-black uppercase tracking-wide">Висококласна визия на достъпна цена</h4>
+            <p className="text-xs text-white/60 leading-relaxed font-semibold">
+              Хората обожават факта, че получават ултрамодерен, футуристичен спортен дизайн (подобен на луксозните модели за по $150-$200) на символична цена. Очилата изглеждат изключително „скъпи“ и стоят страхотно на снимки и видеоклипове.
+            </p>
           </div>
         </div>
       </section>
